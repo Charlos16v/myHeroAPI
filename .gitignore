@@ -1,0 +1,29 @@
+# Maven
+target/
+
+# Spring Boot
+*.iml
+.idea/
+.idea_modules/
+/.mvn/
+
+# Logs
+logs/
+*.log
+
+# Caches
+.mvn/
+.target/
+.spring_aop/
+
+# IntelliJ
+*.iml
+*.iws
+*.ipr
+
+# Logs
+log/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
