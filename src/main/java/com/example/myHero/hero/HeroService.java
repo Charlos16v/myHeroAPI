@@ -7,11 +7,12 @@ public interface HeroService {
     List<Hero> getAll();
 
     Optional<Hero> findById(Long id);
-
     List<Hero> searchHeroesByName(String searchParameter);
 
     Hero createHero(Hero hero);
 
     Hero modifyHero(Long id, Hero updatedHero);
+
+    void deleteHeroById(Long id);
 }
 

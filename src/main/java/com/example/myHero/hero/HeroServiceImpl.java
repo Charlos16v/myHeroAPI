@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+import com.example.myHero.exception.HeroNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +47,20 @@ public class HeroServiceImpl implements HeroService {
             hero.setDescription(updatedHero.getDescription());
             hero.setDob(updatedHero.getDob());
             return _heroRepository.save(hero);
+        } else {
+            throw new HeroNotFoundException("Hero not found with ID: " + id);
         }
-        return null;
     }
 
+    @Override
+    public void deleteHeroById(Long id) {
+        Optional<Hero> heroOptional = _heroRepository.findById(id);
+
+        if (heroOptional.isPresent()) {
+            _heroRepository.delete(heroOptional.get());
+        } else {
+            throw new HeroNotFoundException("Hero not found with ID: " + id);
+        }
+    }
 
 }

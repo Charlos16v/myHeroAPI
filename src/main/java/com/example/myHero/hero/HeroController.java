@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+import com.example.myHero.exception.HeroNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -66,7 +67,27 @@ public class HeroController {
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "400", description = "Bad request")
     public ResponseEntity<Hero> modifyHero(@PathVariable Long id, @RequestBody Hero updatedHero) {
-        Hero hero = _heroService.modifyHero(id, updatedHero);
-        return ResponseEntity.ok(hero);
+        try {
+            Hero hero = _heroService.modifyHero(id, updatedHero);
+            return ResponseEntity.ok(hero);
+        } catch (HeroNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a hero by ID", description = "Deletes a hero based on the provided ID.")
+            @ApiResponse(responseCode = "204", description = "Hero deleted successfully")
+            @ApiResponse(responseCode = "404", description = "Hero not found")
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+
+    public ResponseEntity<Void> deleteHero(@PathVariable Long id) {
+        try {
+            _heroService.deleteHeroById(id);
+            return ResponseEntity.noContent().build();
+        } catch (HeroNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
