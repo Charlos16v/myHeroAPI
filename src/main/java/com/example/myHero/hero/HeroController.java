@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,6 @@ public class HeroController {
     public HeroController(HeroService heroService) {
         this._heroService = heroService;
     }
-
     @GetMapping
     @Operation(summary = "Get all heroes", description = "Returns a list of all heroes.")
     @ApiResponse(responseCode = "200", description = "List of heroes retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
@@ -52,4 +51,13 @@ public class HeroController {
         List<Hero> matchingHeroes = _heroService.searchHeroesByName(searchParameter);
         return ResponseEntity.ok(matchingHeroes);
     }
+
+    @PostMapping
+    @Operation(summary = "Create a new hero", description = "Creates a new hero and returns the created hero.")
+    @ApiResponse(responseCode = "201", description = "Hero created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
+    public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
+        Hero createdHero = _heroService.createHero(hero);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHero);
+    }
+
 }

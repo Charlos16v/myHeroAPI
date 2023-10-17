@@ -9,5 +9,7 @@ public interface HeroService {
     Optional<Hero> findById(Long id);
 
     List<Hero> searchHeroesByName(String searchParameter);
+
+    Hero createHero(Hero hero);
 }
 
