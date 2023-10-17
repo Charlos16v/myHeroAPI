@@ -31,4 +31,8 @@ public class HeroServiceImpl implements HeroService {
         return _heroRepository.findByNameContainingIgnoreCase(searchParameter);
     }
 
+    @Override
+    public Hero createHero(Hero hero) {
+        return _heroRepository.saveAndFlush(hero);
+    }
 }
