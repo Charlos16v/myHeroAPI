@@ -15,12 +15,12 @@ public class HeroTest {
 
     @BeforeEach
     void setUp() {
-        hero = new Hero(1, "Aragorn", "The King of Gondor", LocalDate.of(1970, Month.JANUARY, 1));
+        hero = new Hero("Aragorn", "The King of Gondor", LocalDate.of(1970, Month.JANUARY, 1));
     }
 
     @Test
     void testConstructorWithId() {
-        assertEquals(1, hero.getId());
+        assertEquals(0, hero.getId());
         assertEquals("Aragorn", hero.getName());
         assertEquals("The King of Gondor", hero.getDescription());
         assertEquals(LocalDate.of(1970, Month.JANUARY, 1), hero.getDob());

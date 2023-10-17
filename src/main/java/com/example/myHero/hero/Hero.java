@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -28,13 +29,6 @@ public class Hero {
     private Integer age;
 
     public Hero() {
-    }
-
-    public Hero(long id, String name, String description, LocalDate dob) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.dob = dob;
     }
 
     public Hero(String name, String description, LocalDate dob) {
