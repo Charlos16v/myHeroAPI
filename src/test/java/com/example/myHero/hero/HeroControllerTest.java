@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ public class HeroControllerTest {
     }
 
     @Test
+    @Transactional
     public void testCreateHero() throws Exception {
         String requestBody = "{ \"name\": \"Test Man\", \"description\": \"The testing man.\", \"dob\": \"2001-10-01\" }";
 
@@ -91,7 +93,8 @@ public class HeroControllerTest {
     }
 
     @Test
-    public void testModifyHero() throws Exception {
+    @Transactional
+    public void testModifyHeroSuccess() throws Exception {
         Long heroId = 1L;
         String requestBody = "{ \"name\": \"Updated Superman\", \"description\": \"Updated Man of Steel\", \"dob\": \"1990-01-01\" }";
 
@@ -104,5 +107,34 @@ public class HeroControllerTest {
                 .andExpect(content().string(containsString("Updated Man of Steel")));
     }
 
+    @Test
+    public void testModifyHeroNotFound() throws Exception {
+        Long heroId = 33L;
+        String requestBody = "{ \"name\": \"Updated Superman\", \"description\": \"Updated Man of Steel\", \"dob\": \"1990-01-01\" }";
+
+        mockMvc.perform(put("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteHeroByIdSuccess() throws Exception {
+        Long heroId = 1L;
+
+        mockMvc.perform(delete("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void testDeleteHeroByIdNotFound() throws Exception {
+        Long heroId = 100L; // Assuming this ID does not exist in the test data
+
+        mockMvc.perform(delete("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
 }
