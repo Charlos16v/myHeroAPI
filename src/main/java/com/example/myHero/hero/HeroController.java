@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+import com.example.myHero.annotation.CustomTimed;
 import com.example.myHero.exception.HeroNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,6 +35,7 @@ public class HeroController {
             description = "List of heroes retrieved successfully",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
     )
+    @CustomTimed("GetAll Heroes")
     public ResponseEntity<List<Hero> >getAll() {
         List<Hero> heroes = _heroService.getAll();
         return ResponseEntity.ok(heroes);
@@ -50,6 +52,7 @@ public class HeroController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
     )
     @ApiResponse(responseCode = "404", description = "Hero not found")
+    @CustomTimed("GetById Hero")
     public ResponseEntity<Hero> getById(@PathVariable Long id) {
         Optional<Hero> hero = _heroService.findById(id);
         return hero.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -65,6 +68,7 @@ public class HeroController {
             description = "Heroes found successfully",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
     )
+    @CustomTimed("Search Heroes by name")
     public ResponseEntity<List<Hero>> searchHeroes(@RequestParam String searchParameter) {
         List<Hero> matchingHeroes = _heroService.searchHeroesByName(searchParameter);
         return ResponseEntity.ok(matchingHeroes);
@@ -80,6 +84,7 @@ public class HeroController {
             description = "Hero created successfully",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
     )
+    @CustomTimed("CreateHeroe")
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
         Hero createdHero = _heroService.createHero(hero);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHero);
@@ -93,6 +98,7 @@ public class HeroController {
     @ApiResponse(responseCode = "200", description = "Hero modified successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "400", description = "Bad request")
+    @CustomTimed("ModifyHeroe")
     public ResponseEntity<Hero> modifyHero(@PathVariable Long id, @RequestBody Hero updatedHero) {
         try {
             Hero hero = _heroService.modifyHero(id, updatedHero);
@@ -110,6 +116,7 @@ public class HeroController {
     @ApiResponse(responseCode = "204", description = "Hero deleted successfully")
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
+    @CustomTimed("DeleteHeroe")
     public ResponseEntity<Void> deleteHero(@PathVariable Long id) {
         try {
             _heroService.deleteHeroById(id);
