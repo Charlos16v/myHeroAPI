@@ -60,4 +60,13 @@ public class HeroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHero);
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Modify a hero by ID", description = "Modifies a hero based on the provided ID.")
+    @ApiResponse(responseCode = "200", description = "Hero modified successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
+    @ApiResponse(responseCode = "404", description = "Hero not found")
+    @ApiResponse(responseCode = "400", description = "Bad request")
+    public ResponseEntity<Hero> modifyHero(@PathVariable Long id, @RequestBody Hero updatedHero) {
+        Hero hero = _heroService.modifyHero(id, updatedHero);
+        return ResponseEntity.ok(hero);
+    }
 }

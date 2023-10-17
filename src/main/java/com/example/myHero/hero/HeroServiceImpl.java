@@ -35,4 +35,20 @@ public class HeroServiceImpl implements HeroService {
     public Hero createHero(Hero hero) {
         return _heroRepository.saveAndFlush(hero);
     }
+
+    @Override
+    public Hero modifyHero(Long id, Hero updatedHero) {
+        Optional<Hero> heroOptional = _heroRepository.findById(id);
+
+        if (heroOptional.isPresent()) {
+            Hero hero = heroOptional.get();
+            hero.setName(updatedHero.getName());
+            hero.setDescription(updatedHero.getDescription());
+            hero.setDob(updatedHero.getDob());
+            return _heroRepository.save(hero);
+        }
+        return null;
+    }
+
+
 }
