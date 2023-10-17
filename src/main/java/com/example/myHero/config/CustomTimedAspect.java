@@ -22,7 +22,7 @@ public class CustomTimedAspect {
 
         String logMessage = customMessage.isEmpty() ? methodName : customMessage;
 
-        System.out.println(logMessage + "request executed in " + executionTime + " ms");
+        System.out.println(logMessage + " request executed in " + executionTime + " ms");
 
         return result;
     }
