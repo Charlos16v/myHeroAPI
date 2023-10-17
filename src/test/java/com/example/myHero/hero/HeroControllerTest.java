@@ -9,8 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,5 +89,20 @@ public class HeroControllerTest {
                 .andExpect(content().string(containsString("Test Man")))
                 .andExpect(content().string(containsString("The testing man")));
     }
+
+    @Test
+    public void testModifyHero() throws Exception {
+        Long heroId = 1L;
+        String requestBody = "{ \"name\": \"Updated Superman\", \"description\": \"Updated Man of Steel\", \"dob\": \"1990-01-01\" }";
+
+        mockMvc.perform(put("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("Updated Superman")))
+                .andExpect(content().string(containsString("Updated Man of Steel")));
+    }
+
 
 }
