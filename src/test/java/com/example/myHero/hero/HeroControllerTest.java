@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,5 +54,26 @@ public class HeroControllerTest {
         mockMvc.perform(get("/hero/" + heroId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testSearchHeroesByNameCaseInsensitive() throws Exception {
+        mockMvc.perform(get("/hero/search")
+                        .param("searchParameter", "MAN")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("Superman")))
+                .andExpect(content().string(containsString("Batman")));
+    }
+
+    @Test
+    public void testSearchHeroesByNameCaseInsensitiveNoResults() throws Exception {
+        mockMvc.perform(get("/hero/search")
+                        .param("searchParameter", "Thor")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("[]"));
     }
 }
