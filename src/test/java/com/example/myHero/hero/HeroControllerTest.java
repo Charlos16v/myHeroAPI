@@ -130,7 +130,7 @@ public class HeroControllerTest {
 
     @Test
     public void testDeleteHeroByIdNotFound() throws Exception {
-        Long heroId = 100L; // Assuming this ID does not exist in the test data
+        Long heroId = 9999L; // Assuming this ID does not exist in the test data
 
         mockMvc.perform(delete("/hero/" + heroId)
                         .contentType(MediaType.APPLICATION_JSON))
