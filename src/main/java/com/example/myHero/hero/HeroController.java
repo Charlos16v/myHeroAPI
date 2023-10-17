@@ -23,26 +23,43 @@ public class HeroController {
     public HeroController(HeroService heroService) {
         this._heroService = heroService;
     }
+
     @GetMapping
-    @Operation(summary = "Get all heroes", description = "Returns a list of all heroes.")
-    @ApiResponse(responseCode = "200", description = "List of heroes retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
-    public ResponseEntity<List<Hero>> getAll() {
+    @Operation(
+            summary = "Get all heroes",
+            description = "Returns a list of all heroes."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "List of heroes retrieved successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
+    )
+    public ResponseEntity<List<Hero> >getAll() {
         List<Hero> heroes = _heroService.getAll();
         return ResponseEntity.ok(heroes);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get a hero by ID", description = "Returns a hero based on the provided ID.")
-    @ApiResponse(responseCode = "200", description = "Hero retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
+    @Operation(
+            summary = "Get a hero by ID",
+            description = "Returns a hero based on the provided ID."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Hero retrieved successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
+    )
     @ApiResponse(responseCode = "404", description = "Hero not found")
     public ResponseEntity<Hero> getById(@PathVariable Long id) {
         Optional<Hero> hero = _heroService.findById(id);
-
         return hero.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
-    @Operation(summary = "Search heroes by name", description = "Returns heroes whose names contain the provided search parameter.")
+    @Operation(
+            summary = "Search heroes by name",
+            description = "Returns heroes whose names contain the provided search parameter."
+    )
     @ApiResponse(
             responseCode = "200",
             description = "Heroes found successfully",
@@ -54,15 +71,25 @@ public class HeroController {
     }
 
     @PostMapping
-    @Operation(summary = "Create a new hero", description = "Creates a new hero and returns the created hero.")
-    @ApiResponse(responseCode = "201", description = "Hero created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
+    @Operation(
+            summary = "Create a new hero",
+            description = "Creates a new hero and returns the created hero."
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Hero created successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
+    )
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
         Hero createdHero = _heroService.createHero(hero);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHero);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Modify a hero by ID", description = "Modifies a hero based on the provided ID.")
+    @Operation(
+            summary = "Modify a hero by ID",
+            description = "Modifies a hero based on the provided ID."
+    )
     @ApiResponse(responseCode = "200", description = "Hero modified successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class)))
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "400", description = "Bad request")
@@ -75,13 +102,14 @@ public class HeroController {
         }
     }
 
-
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a hero by ID", description = "Deletes a hero based on the provided ID.")
-            @ApiResponse(responseCode = "204", description = "Hero deleted successfully")
-            @ApiResponse(responseCode = "404", description = "Hero not found")
-            @ApiResponse(responseCode = "500", description = "Internal server error")
-
+    @Operation(
+            summary = "Delete a hero by ID",
+            description = "Deletes a hero based on the provided ID."
+    )
+    @ApiResponse(responseCode = "204", description = "Hero deleted successfully")
+    @ApiResponse(responseCode = "404", description = "Hero not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<Void> deleteHero(@PathVariable Long id) {
         try {
             _heroService.deleteHeroById(id);
