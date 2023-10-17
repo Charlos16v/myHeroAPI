@@ -35,4 +35,23 @@ public class HeroControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("[{\"id\":1,\"name\":\"Superman\",\"description\":\"Man of Steel\",\"dob\":\"1980-01-01\",\"age\":43},{\"id\":2,\"name\":\"Batman\",\"description\":\"Dark Knight\",\"dob\":\"1975-03-15\",\"age\":48},{\"id\":3,\"name\":\"Wonder Woman\",\"description\":\"Amazon Princess\",\"dob\":\"1985-06-10\",\"age\":38},{\"id\":4,\"name\":\"The Flash\",\"description\":\"Speedster\",\"dob\":\"1990-12-05\",\"age\":32},{\"id\":5,\"name\":\"Aquaman\",\"description\":\"King of Atlantis\",\"dob\":\"1988-08-20\",\"age\":35}]"));
     }
+
+    @Test
+    public void testGetHeroByIdFound() throws Exception {
+        Long heroId = 1L;
+
+        mockMvc.perform(get("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetHeroByIdNotFound() throws Exception {
+        Long heroId = 100L; // Assuming this ID does not exist in the test data
+
+        mockMvc.perform(get("/hero/" + heroId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
