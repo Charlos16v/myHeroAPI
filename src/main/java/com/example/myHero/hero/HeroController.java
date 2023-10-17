@@ -1,5 +1,6 @@
 package com.example.myHero.hero;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,24 +11,16 @@ import java.util.Optional;
 @RequestMapping("/hero")
 public class HeroController {
 
-    private final HeroRepository _heroRepository;
+    private final HeroService heroService;
 
-    public HeroController(HeroRepository heroRepository) {
-        this._heroRepository = heroRepository;
+    @Autowired
+    public HeroController(HeroService heroService) {
+        this.heroService = heroService;
     }
 
     @GetMapping
     public ResponseEntity<List<Hero>> getAll() {
-        List<Hero> heroes = _heroRepository.findAll();
+        List<Hero> heroes = heroService.getAll();
         return ResponseEntity.ok(heroes);
     }
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Hero> getById(@PathVariable Long id) {
-        Optional<Hero> hero = _heroRepository.findById(id);
-
-        return hero.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
 }
