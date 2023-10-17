@@ -40,4 +40,16 @@ public class HeroController {
 
         return hero.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search heroes by name", description = "Returns heroes whose names contain the provided search parameter.")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Heroes found successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hero.class))
+    )
+    public ResponseEntity<List<Hero>> searchHeroes(@RequestParam String searchParameter) {
+        List<Hero> matchingHeroes = _heroService.searchHeroesByName(searchParameter);
+        return ResponseEntity.ok(matchingHeroes);
+    }
 }

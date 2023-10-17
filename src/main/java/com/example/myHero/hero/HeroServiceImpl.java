@@ -26,4 +26,9 @@ public class HeroServiceImpl implements HeroService {
         return _heroRepository.findById(id);
     }
 
+    @Override
+    public List<Hero> searchHeroesByName(String searchParameter) {
+        return _heroRepository.findByNameContainingIgnoreCase(searchParameter);
+    }
+
 }

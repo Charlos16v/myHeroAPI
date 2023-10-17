@@ -7,5 +7,7 @@ public interface HeroService {
     List<Hero> getAll();
 
     Optional<Hero> findById(Long id);
+
+    List<Hero> searchHeroesByName(String searchParameter);
 }
 
