@@ -72,4 +72,7 @@ Welcome to MyHeroAPI, a challenge project for W2M. This API is designed to manag
   - `dob` (string, date) - Date of birth of the hero
   - `age` (integer, int32) - The age of the hero
 
-For more details about the data model and API, please refer to the documentation.
+## Additional Information
+- **Purpose**: MyHeroAPI is a challenge project for W2M, designed for managing heroes.
+- **Contact**: For more information, please contact Carlos Uriel at [carluitosgfx@gmail.com](mailto:carluitosgfx@gmail.com).
+- **Documentation**: For in-depth details, please refer to the Swagger documentation.
