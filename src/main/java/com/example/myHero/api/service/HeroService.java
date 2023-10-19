@@ -1,5 +1,6 @@
-package com.example.myHero.hero;
+package com.example.myHero.api.service;
 
+import com.example.myHero.model.Hero;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -15,13 +16,10 @@ public interface HeroService {
     @Cacheable("heroCache")
     List<Hero> searchHeroesByName(String searchParameter);
 
-    @Cacheable("heroCache")
     Hero createHero(Hero hero);
 
-    @Cacheable("heroCache")
     Hero modifyHero(Long id, Hero updatedHero);
 
-    @Cacheable("heroCache")
     void deleteHeroById(Long id);
 }
 
