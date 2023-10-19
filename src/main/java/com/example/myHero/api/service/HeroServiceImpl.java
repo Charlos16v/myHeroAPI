@@ -40,7 +40,7 @@ public class HeroServiceImpl implements HeroService {
     }
 
     @Override
-    public Hero modifyHero(Long id, Hero updatedHero) {
+    public void modifyHero(Long id, Hero updatedHero) {
         Optional<Hero> heroOptional = _heroRepository.findById(id);
 
         if (heroOptional.isPresent()) {
@@ -48,7 +48,7 @@ public class HeroServiceImpl implements HeroService {
             hero.setName(updatedHero.getName());
             hero.setDescription(updatedHero.getDescription());
             hero.setDob(updatedHero.getDob());
-            return _heroRepository.save(hero);
+            _heroRepository.save(hero);
         } else {
             throw new HeroNotFoundException("Hero not found with ID: " + id);
         }

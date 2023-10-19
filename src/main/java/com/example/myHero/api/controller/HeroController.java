@@ -2,6 +2,7 @@ package com.example.myHero.api.controller;
 
 import com.example.myHero.aspect.CustomTimed;
 import com.example.myHero.api.service.HeroService;
+import com.example.myHero.exception.HeroExceptionHandler;
 import com.example.myHero.exception.HeroNotFoundException;
 import com.example.myHero.model.Hero;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,8 +40,7 @@ public class HeroController {
     )
     @CustomTimed("GetAll Heroes")
     public ResponseEntity<List<Hero> >getAll() {
-        List<Hero> heroes = _heroService.getAll();
-        return ResponseEntity.ok(heroes);
+        return ResponseEntity.ok(_heroService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -101,12 +101,12 @@ public class HeroController {
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "400", description = "Bad request")
     @CustomTimed("ModifyHeroe")
-    public ResponseEntity<Hero> modifyHero(@PathVariable Long id, @RequestBody Hero updatedHero) {
+    public ResponseEntity modifyHero(@PathVariable Long id, @RequestBody Hero updatedHero) {
         try {
-            Hero hero = _heroService.modifyHero(id, updatedHero);
-            return ResponseEntity.ok(hero);
+            _heroService.modifyHero(id, updatedHero);
+            return ResponseEntity.ok().build();
         } catch (HeroNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return HeroExceptionHandler.handleHeroNotFoundException(e);
         }
     }
 
@@ -119,12 +119,12 @@ public class HeroController {
     @ApiResponse(responseCode = "404", description = "Hero not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     @CustomTimed("DeleteHeroe")
-    public ResponseEntity<Void> deleteHero(@PathVariable Long id) {
+    public ResponseEntity deleteHero(@PathVariable Long id) {
         try {
             _heroService.deleteHeroById(id);
             return ResponseEntity.noContent().build();
         } catch (HeroNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return HeroExceptionHandler.handleHeroNotFoundException(e);
         }
     }
 }
