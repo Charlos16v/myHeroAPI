@@ -86,12 +86,13 @@ public class HeroServiceImplTest {
         Long heroId = 1L;
         Hero updatedHero = new Hero();
         Hero existingHero = new Hero();
+
         Mockito.when(heroRepository.findById(heroId)).thenReturn(Optional.of(existingHero));
         Mockito.when(heroRepository.save(existingHero)).thenReturn(existingHero);
 
-        Hero result = heroService.modifyHero(heroId, updatedHero);
+        heroService.modifyHero(heroId, updatedHero);
 
-        assertEquals(existingHero, result);
+        Mockito.verify(heroRepository, Mockito.times(1)).save(existingHero);
     }
 
     @Test
