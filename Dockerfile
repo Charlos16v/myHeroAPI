@@ -1,5 +1,5 @@
 # Use an official OpenJDK 17 runtime as a parent image
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17-jdk-slim-buster
 
 # Set the working directory within the container
 WORKDIR /app
