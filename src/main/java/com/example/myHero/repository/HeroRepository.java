@@ -1,5 +1,6 @@
-package com.example.myHero.hero;
+package com.example.myHero.repository;
 
+import com.example.myHero.model.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,8 @@
-package com.example.myHero.hero;
+package com.example.myHero.api.service;
 
 import com.example.myHero.exception.HeroNotFoundException;
+import com.example.myHero.model.Hero;
+import com.example.myHero.repository.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +57,6 @@ public class HeroServiceImpl implements HeroService {
     @Override
     public void deleteHeroById(Long id) {
         Optional<Hero> heroOptional = _heroRepository.findById(id);
-
         if (heroOptional.isPresent()) {
             _heroRepository.delete(heroOptional.get());
         } else {

@@ -1,4 +1,4 @@
-package com.example.myHero.annotation;
+package com.example.myHero.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

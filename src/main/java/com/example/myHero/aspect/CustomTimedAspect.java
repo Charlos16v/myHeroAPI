@@ -1,6 +1,5 @@
-package com.example.myHero.config;
+package com.example.myHero.aspect;
 
-import com.example.myHero.annotation.CustomTimed;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
