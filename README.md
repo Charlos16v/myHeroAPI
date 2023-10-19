@@ -9,6 +9,9 @@ Welcome to MyHeroAPI, a challenge project for W2M. This API is designed to manag
 - URL: [http://localhost:8080](http://localhost:8080)
 - Swagger: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 
+## Docker
+- Image: https://hub.docker.com/repository/docker/charlos16v/myheroapi/general
+
 ## API Endpoints
 
 ### Get a Hero by ID
